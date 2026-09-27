@@ -1,0 +1,262 @@
+{
+  "size": 33,
+  "groups": [
+    {
+      "slug": "cinematic",
+      "name": "Cinematic",
+      "description": "Profils de graded films : teal & orange, bleach bypass.",
+      "icon": "film"
+    },
+    {
+      "slug": "film-emulation",
+      "name": "Fujifilm",
+      "description": "Simulations Fujifilm (Classic Chrome, Astia, Provia).",
+      "icon": "camera"
+    },
+    {
+      "slug": "vintage",
+      "name": "Vintage",
+      "description": "Ports analogiques, virage, grain argentique.",
+      "icon": "clock"
+    },
+    {
+      "slug": "bw",
+      "name": "Noir & B&W",
+      "description": "Conversions monochromes haute densité.",
+      "icon": "contrast"
+    },
+    {
+      "slug": "creative",
+      "name": "Créatives",
+      "description": "Looks très typés (cyberpunk, solarisé, froid).",
+      "icon": "sparkles"
+    }
+  ],
+  "luts": [
+    {
+      "slug": "cinematic-teal-orange",
+      "name": "Teal & Orange",
+      "group": "cinematic",
+      "description": "Contraste cinématographique, ombres froides et hautes lumières chaudes.",
+      "author": "Lumen Studio",
+      "url": "/luts/system/cinematic-teal-orange.cube",
+      "size": 33
+    },
+    {
+      "slug": "cinematic-bleach-bypass",
+      "name": "Bleach Bypass",
+      "group": "cinematic",
+      "description": "Silver halide : contraste sec, désaturation légère.",
+      "author": "Lumen Studio",
+      "url": "/luts/system/cinematic-bleach-bypass.cube",
+      "size": 33
+    },
+    {
+      "slug": "cinematic-blockbuster",
+      "name": "Blockbuster Contrast",
+      "group": "cinematic",
+      "description": "Noirs profonds, hautes lumières brûlées, courbe S appliquée.",
+      "author": "Lumen Studio",
+      "url": "/luts/system/cinematic-blockbuster.cube",
+      "size": 33
+    },
+    {
+      "slug": "cinematic-navy-fade",
+      "name": "Navy Fade",
+      "group": "cinematic",
+      "description": "Bleu nuit, noirs délavés, ambiance urbaine.",
+      "author": "Lumen Studio",
+      "url": "/luts/system/cinematic-navy-fade.cube",
+      "size": 33
+    },
+    {
+      "slug": "cinematic-sunset-gold",
+      "name": "Sunset Gold",
+      "group": "cinematic",
+      "description": "Hautes lumières dorées, ombres magenta.",
+      "author": "Lumen Studio",
+      "url": "/luts/system/cinematic-sunset-gold.cube",
+      "size": 33
+    },
+    {
+      "slug": "cinematic-matte",
+      "name": "Matte Film",
+      "group": "cinematic",
+      "description": "Noirs relevés, rendu pellicule mate.",
+      "author": "Lumen Studio",
+      "url": "/luts/system/cinematic-matte.cube",
+      "size": 33
+    },
+    {
+      "slug": "fujifilm-classic-chrome",
+      "name": "Classic Chrome",
+      "group": "film-emulation",
+      "description": "Couleurs sourdes, ombres vert-olive, rendu journal.",
+      "author": "Dérivé Fujifilm",
+      "url": "/luts/system/fujifilm-classic-chrome.cube",
+      "size": 33
+    },
+    {
+      "slug": "fujifilm-astia",
+      "name": "Astia",
+      "group": "film-emulation",
+      "description": "Couleurs douces, contraste modéré, peau flattenée.",
+      "author": "Dérivé Fujifilm",
+      "url": "/luts/system/fujifilm-astia.cube",
+      "size": 33
+    },
+    {
+      "slug": "fujifilm-provia",
+      "name": "Provia",
+      "group": "film-emulation",
+      "description": "Négatif standard, couleurs denses, usage général.",
+      "author": "Dérivé Fujifilm",
+      "url": "/luts/system/fujifilm-provia.cube",
+      "size": 33
+    },
+    {
+      "slug": "fujifilm-velvia",
+      "name": "Velvia",
+      "group": "film-emulation",
+      "description": "Saturations élevées, tons très froids. Paysages.",
+      "author": "Dérivé Fujifilm",
+      "url": "/luts/system/fujifilm-velvia.cube",
+      "size": 33
+    },
+    {
+      "slug": "fujifilm-eterna",
+      "name": "Eterna",
+      "group": "film-emulation",
+      "description": "Ombres vertes, rendu cinéma discret.",
+      "author": "Dérivé Fujifilm",
+      "url": "/luts/system/fujifilm-eterna.cube",
+      "size": 33
+    },
+    {
+      "slug": "fujifilm-acros",
+      "name": "Acros",
+      "group": "film-emulation",
+      "description": "Noir et blanc avec grain fin et courbe douce.",
+      "author": "Dérivé Fujifilm",
+      "url": "/luts/system/fujifilm-acros.cube",
+      "size": 33
+    },
+    {
+      "slug": "vintage-portra-warm",
+      "name": "Portra 400 Warm",
+      "group": "vintage",
+      "description": "Doré, tons chairs légèrement délavés.",
+      "author": "Interprétation libre",
+      "url": "/luts/system/vintage-portra-warm.cube",
+      "size": 33
+    },
+    {
+      "slug": "vintage-kodak-gold",
+      "name": "Kodak Gold 200",
+      "group": "vintage",
+      "description": "Jaunes chauds, ombres orangées.",
+      "author": "Interprétation libre",
+      "url": "/luts/system/vintage-kodak-gold.cube",
+      "size": 33
+    },
+    {
+      "slug": "vintage-ektachrome",
+      "name": "Ektachrome Shift",
+      "group": "vintage",
+      "description": "Cyan des ombres, look années 70.",
+      "author": "Interprétation libre",
+      "url": "/luts/system/vintage-ektachrome.cube",
+      "size": 33
+    },
+    {
+      "slug": "vintage-faded-polaroid",
+      "name": "Faded Polaroid",
+      "group": "vintage",
+      "description": "Noirs laiteux, contraste très bas.",
+      "author": "Interprétation libre",
+      "url": "/luts/system/vintage-faded-polaroid.cube",
+      "size": 33
+    },
+    {
+      "slug": "vintage-sepia",
+      "name": "Sepia Tone",
+      "group": "vintage",
+      "description": "Virage sépia classique, contraste doux.",
+      "author": "Interprétation libre",
+      "url": "/luts/system/vintage-sepia.cube",
+      "size": 33
+    },
+    {
+      "slug": "bw-high-contrast",
+      "name": "High Contrast Mono",
+      "group": "bw",
+      "description": "Courbe S forte, noirs et blancs nets.",
+      "author": "Lumen Studio",
+      "url": "/luts/system/bw-high-contrast.cube",
+      "size": 33
+    },
+    {
+      "slug": "bw-soft-silver",
+      "name": "Soft Silver",
+      "group": "bw",
+      "description": "Courbe S douce, blanc lumineux, rendu portrait.",
+      "author": "Lumen Studio",
+      "url": "/luts/system/bw-soft-silver.cube",
+      "size": 33
+    },
+    {
+      "slug": "bw-panchromatic",
+      "name": "Panchromatic",
+      "group": "bw",
+      "description": "Rend les verts sombres, ciel classique.",
+      "author": "Lumen Studio",
+      "url": "/luts/system/bw-panchromatic.cube",
+      "size": 33
+    },
+    {
+      "slug": "bw-infrared",
+      "name": "Infrared Film",
+      "group": "bw",
+      "description": "Noir et blanc très contrasté, atmosphère.",
+      "author": "Lumen Studio",
+      "url": "/luts/system/bw-infrared.cube",
+      "size": 33
+    },
+    {
+      "slug": "creative-cyberpunk",
+      "name": "Cyberpunk",
+      "group": "creative",
+      "description": "Magenta et cyan, très saturé.",
+      "author": "Lumen Studio",
+      "url": "/luts/system/creative-cyberpunk.cube",
+      "size": 33
+    },
+    {
+      "slug": "creative-solarize",
+      "name": "Solarize",
+      "group": "creative",
+      "description": "Inversion partielle, rendu psychédélique.",
+      "author": "Lumen Studio",
+      "url": "/luts/system/creative-solarize.cube",
+      "size": 33
+    },
+    {
+      "slug": "creative-arctic",
+      "name": "Arctic Cold",
+      "group": "creative",
+      "description": "Bleu glacier, désaturation des rouges.",
+      "author": "Lumen Studio",
+      "url": "/luts/system/creative-arctic.cube",
+      "size": 33
+    },
+    {
+      "slug": "creative-desert",
+      "name": "Desert Warm",
+      "group": "creative",
+      "description": "Sable et ocre, split-toning marqué.",
+      "author": "Lumen Studio",
+      "url": "/luts/system/creative-desert.cube",
+      "size": 33
+    }
+  ]
+}

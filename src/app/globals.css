@@ -1,0 +1,313 @@
+@import 'tailwindcss';
+
+/* ===========================================================================
+   LUMEN STUDIO — Design tokens
+   ---------------------------------------------------------------------------
+   Quatre thèmes pilotés par l'attribut `data-theme` sur <html>.
+   On ne code jamais une couleur en dur dans les composants : on utilise
+   les tokens sémantiques (bg-surface, text-fg-muted, border-line, accent...).
+   ======================================================================== */
+
+@custom-variant dark (&:where([data-theme='pro-dark'], [data-theme='adobe-classic'], [data-theme='paper']));
+
+@theme inline {
+  /* --- Surfaces ------------------------------------------------------- */
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-elevated: var(--elevated);
+
+  /* --- Texte ---------------------------------------------------------- */
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+
+  /* --- Lignes & séparateurs ------------------------------------------- */
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  /* --- Accent (profil de couleur de l'UI) ----------------------------- */
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-accent-soft: var(--accent-soft);
+
+  /* --- Sémantique (état des contrôles de retouche) -------------------- */
+  --color-clip: var(--clip);
+  --color-cyan-accent: var(--cyan-accent);
+  --color-mask-active: var(--mask-active);
+
+  /* --- Effets de thème ------------------------------------------------ */
+  --shadow-panel: var(--panel-shadow);
+  --blur-glass: var(--glass-blur);
+  --radius-panel: var(--radius);
+
+  /* --- Typographie & rayons ------------------------------------------- */
+  --font-sans: var(--app-font-sans);
+  --font-mono: var(--app-font-mono);
+}
+
+/* ===========================================================================
+   THÈME 1 — PRO DARK (défaut)
+   Minimaliste, noir profond, accents froids. Le contenu visuel ne doit
+   jamais être pollutants par l'UI -> surfaces quasi neutres.
+   ======================================================================== */
+:root,
+[data-theme='pro-dark'] {
+  color-scheme: dark;
+
+  --bg: #08090b;
+  --surface: #0e1013;
+  --surface-2: #15181d;
+  --surface-3: #1d2127;
+  --elevated: #22262e;
+
+  --fg: #e8eaed;
+  --fg-muted: #9aa2ad;
+  --fg-subtle: #5d6672;
+
+  --line: #23272f;
+  --line-strong: #333944;
+
+  --accent: #4c8dff;
+  --accent-hover: #6ba0ff;
+  --accent-contrast: #04122b;
+  --accent-soft: rgba(76, 141, 255, 0.14);
+
+  --clip: #38bdf8;
+  --cyan-accent: #22d3ee;
+  --mask-active: #ff5c8a;
+
+  --panel-shadow: 0 1px 0 0 rgb(255 255 255 / 0.03) inset, 0 12px 32px -12px rgb(0 0 0 / 0.8);
+  --glass-blur: 0px;
+  --radius: 0.5rem;
+
+  --grain-opacity: 0;
+
+  --app-font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Inter, sans-serif;
+  --app-font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, monospace;
+}
+
+/* ===========================================================================
+   THÈME 2 — GLASSMORPHISM
+   Surfaces translucides + flou d'arrière-plan, liserés lumineux.
+   ======================================================================== */
+[data-theme='glassmorphism'] {
+  color-scheme: dark;
+
+  --bg: #0b1020;
+  --surface: rgb(255 255 255 / 0.06);
+  --surface-2: rgb(255 255 255 / 0.1);
+  --surface-3: rgb(255 255 255 / 0.16);
+  --elevated: rgb(255 255 255 / 0.22);
+
+  --fg: #f4f6ff;
+  --fg-muted: #b9c1dd;
+  --fg-subtle: #7e88a8;
+
+  --line: rgb(255 255 255 / 0.14);
+  --line-strong: rgb(255 255 255 / 0.28);
+
+  --accent: #7c8cff;
+  --accent-hover: #97a3ff;
+  --accent-contrast: #0a0f24;
+  --accent-soft: rgb(124 140 255 / 0.22);
+
+  --clip: #4cc9f0;
+  --cyan-accent: #4895ef;
+  --mask-active: #ff6b9d;
+
+  --panel-shadow: 0 8px 32px rgb(2 4 20 / 0.55), 0 0 0 1px rgb(255 255 255 / 0.08) inset;
+  --glass-blur: 20px;
+  --radius: 0.875rem;
+
+  --grain-opacity: 0.02;
+
+  --app-font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Inter, sans-serif;
+  --app-font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, monospace;
+}
+
+/* ===========================================================================
+   THÈME 3 — ADOBE CLASSIC
+   Gris neutre professionnel, densité élevée, contraste type Camera Raw.
+   ======================================================================== */
+[data-theme='adobe-classic'] {
+  color-scheme: dark;
+
+  --bg: #232323;
+  --surface: #2b2b2b;
+  --surface-2: #333333;
+  --surface-3: #3d3d3d;
+  --elevated: #454545;
+
+  --fg: #dcdcdc;
+  --fg-muted: #a0a0a0;
+  --fg-subtle: #6e6e6e;
+
+  --line: #3a3a3a;
+  --line-strong: #4d4d4d;
+
+  --accent: #3d7dca;
+  --accent-hover: #4f8fdb;
+  --accent-contrast: #ffffff;
+  --accent-soft: rgb(61 125 202 / 0.2);
+
+  --clip: #4aa3df;
+  --cyan-accent: #2f8fc4;
+  --mask-active: #e05a7a;
+
+  --panel-shadow: 0 1px 0 0 rgb(255 255 255 / 0.05) inset, 0 2px 6px rgb(0 0 0 / 0.35);
+  --glass-blur: 0px;
+  --radius: 0.25rem;
+
+  --grain-opacity: 0;
+
+  --app-font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --app-font-mono: ui-monospace, Menlo, monospace;
+}
+
+/* ===========================================================================
+   THÈME 4 — PAPER
+   Texture grainée, couleurs chaudes, faible contraste. Pensé pour un
+   affichage lumineux (projecteur, salle claire) et un confort de lecture
+   prolongé sur les écrans OLED.
+   ======================================================================== */
+[data-theme='paper'] {
+  color-scheme: light;
+
+  --bg: #f2ece1;
+  --surface: #faf6ee;
+  --surface-2: #f0e9dc;
+  --surface-3: #e5dccb;
+  --elevated: #fffdf8;
+
+  --fg: #2b2620;
+  --fg-muted: #6d6459;
+  --fg-subtle: #9a9184;
+
+  --line: #ded4c2;
+  --line-strong: #c4b8a2;
+
+  --accent: #b4622a;
+  --accent-hover: #c9713a;
+  --accent-contrast: #fff8f0;
+  --accent-soft: rgb(180 98 42 / 0.14);
+
+  --clip: #2f7d8c;
+  --cyan-accent: #417a86;
+  --mask-active: #c24a6a;
+
+  --panel-shadow: 0 1px 0 0 rgb(255 255 255 / 0.6) inset, 0 6px 18px -10px rgb(80 60 35 / 0.35);
+  --glass-blur: 0px;
+  --radius: 0.375rem;
+
+  --grain-opacity: 0.055;
+
+  --app-font-sans: ui-serif, Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+  --app-font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
+/* ===========================================================================
+   BASE
+   ======================================================================== */
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+
+  html {
+    background-color: var(--bg);
+    /* Empêche le flash de thème au chargement (cf. ThemeScript inline). */
+    color-scheme: light dark;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--app-font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overscroll-behavior: none;
+  }
+
+  /* Grain de texture — thème Paper uniquement (--grain-opacity). */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: var(--grain-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    background-color: var(--accent-soft);
+    color: var(--fg);
+  }
+
+  /* Barres de défilement discrètes */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--line-strong);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--fg-subtle);
+  }
+}
+
+/* ===========================================================================
+   UTILITAIRES MÉTIER
+   ======================================================================== */
+@layer utilities {
+  /* Panneau « verre » : actif uniquement si le thème le demande. */
+  .glass {
+    background-color: color-mix(in srgb, var(--surface) 100%, transparent);
+    backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  }
+
+  .panel {
+    background-color: var(--surface);
+    box-shadow: var(--panel-shadow);
+  }
+
+  /* Les-thumbnails d'outils retoucheurs : piste du curseur de sélection active. */
+  .ring-active {
+    box-shadow:
+      0 0 0 1px var(--accent),
+      0 0 0 4px var(--accent-soft);
+  }
+
+  /* Rangée de sliders façon Lightroom : rail + poignée fine. */
+  .slider-track {
+    @apply relative h-1 w-full rounded-full;
+    background-color: var(--surface-3);
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Accessibilité : respecte la préférence système */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

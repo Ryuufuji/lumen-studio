@@ -1,0 +1,119 @@
+# electron-builder — empaquetage et publication
+#
+# Cibles produites :
+#   win   → installeur NSIS (setup.exe)
+#   linux → AppImage (exécutable autonome)
+#   mac   → zip (darwin) pour l'auto-update
+#
+# Le flux complet est documenté dans README.md.
+#
+# `npm run release` exige LUMEN_GITHUB_OWNER et LUMEN_GITHUB_REPO : sans
+# elles, la release ne peut pas être publiée et aucun client ne trouverait de
+# mise à jour.
+
+appId: app.lumen.studio
+productName: Lumen Studio
+copyright: © Lumen Studio
+
+directories:
+  output: release
+  buildResources: build
+
+# Source unique pour les trois plateformes : electron-builder convertit ce
+# PNG 512×512 en .ico (Windows) et en .icns (macOS). Régénéré par
+# `npm run desktop:prepare`.
+icon: build/icon.png
+
+# Dans l'archive : uniquement le code Electron. C'est volontairement mince —
+# le poids réel de l'application est le serveur Next, qui n'a rien à faire
+# dans un asar (voir extraResources plus bas).
+files:
+  - electron/**/*
+  - package.json
+  - '!**/*.map'
+  - '!**/{.DS_Store,.git,.next/cache,__test}/**'
+
+# Le serveur Next standalone part en extraResources, donc SUR LE DISQUE.
+# Raison : un serveur Node qui charge ses propres modules depuis un asar bute
+# sur ce que le shim fs d'Electron ne couvre pas (mmap, fs.watch, résolution
+# de liens symboliques dans node_modules). Sur disque, c'est le chemin
+# standard, sans surprise. electron/main.js le lit via process.resourcesPath.
+extraResources:
+  - from: .next/standalone
+    to: server
+
+asar: true
+buildDependenciesFromSource: false
+
+# Les noms d'artefacts ne contiennent AUCUN espace, volontairement.
+#
+# electron-builder écrit dans `latest.yml` une URL d'asset où les espaces
+# deviennent des tirets, mais publie le fichier sous son nom réel. Un client
+# qui télécharge ensuite l'URL annoncée demanderait donc `Lumen-Studio-...`
+# et recevrait un 404 : la mise à jour automatique échouerait sans jamais
+# le dire. Sans espace, les deux noms sont identiques par construction.
+
+# Linux — AppImage
+appImage:
+  license: null
+
+publish:
+  provider: github
+  # Placeholder VOLONTAIREMENT invalide. Un build local (`desktop:dist`)
+  # n'a pas de dépôt où publier, et il doit fonctionner quand même.
+  #
+  # `npm run release` n'utilise PAS ces valeurs : il les écrase avec
+  # LUMEN_GITHUB_OWNER / LUMEN_GITHUB_REPO, puis vérifie que le fichier
+  # app-update.yml réellement embarqué pointe bien vers le bon dépôt. C'est
+  # le seul endroit où une erreur se paie cher — un client installé avec un
+  # mauvais dépôt ne trouve jamais de mise à jour, sans jamais rien signaler.
+  owner: __CONFIGUREZ-MOI__
+  repo: __CONFIGUREZ-MOI__
+  releaseType: release
+  # electron-updater ne cherche que les releases taguées d'un vX.Y.Z.
+  channel: latest
+
+# ---------------------------------------------------------------------------
+# Windows — installeur
+# ---------------------------------------------------------------------------
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  artifactName: lumen-studio-${version}-setup.${ext}
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  # La signature Authenticode n'est PAS une option du YAML : electron-builder
+  # la déclenche s'il trouve un certificat dans l'environnement
+  # (CSC_LINK / CSC_KEY_PASSWORD). Sans certificat, l'installeur se construit
+  # mais SmartScreen le bloque au premier lancement — voir README.
+
+# ---------------------------------------------------------------------------
+# Linux — AppImage
+# ---------------------------------------------------------------------------
+linux:
+  target:
+    - target: AppImage
+      arch: [x64]
+  category: Graphics
+  synopsis: Éditeur photo non destructif (calques de masque, LUTs, WebGL)
+  description: >-
+    Retouche photo 100 % locale : les calques de masque sont peints dans des
+    textures GPU, la colorimétrie et les LUTs 3D sont appliqués par shaders
+    WebGL, et l'image ne quitte jamais la machine.
+  artifactName: lumen-studio-${version}-${arch}.${ext}
+
+# ---------------------------------------------------------------------------
+# macOS — zip (darwin) pour electron-updater
+# ---------------------------------------------------------------------------
+mac:
+  target:
+    - target: zip
+      arch: [x64, arm64]
+  category: public.app-category.photography
+  artifactName: lumen-studio-${version}-${arch}.${ext}
