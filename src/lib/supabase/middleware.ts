@@ -56,7 +56,26 @@ export async function updateSession(request: NextRequest) {
   return supabaseResponse
 }
 
-const PUBLIC_ROUTES = ['/', '/login', '/signup', '/auth/callback', '/auth/auth-code-error']
+/**
+ * Routes atteignables sans compte.
+ *
+ * `/editor` en fait partie, et c'est délibéré : la retouche est 100 % locale
+ * (rendu WebGL, LUTs livrées avec l'application). Aucun de ses composants ne
+ * parle à Supabase. La bloquer derriere une authentification n'apporterait
+ * aucune sécurité — cela Rendrait seulement l'application inutilisable tant
+ * qu'aucun projet n'est configuré.
+ *
+ * La photothèque, les presets et l'académie, eux, restent proteges : ils
+ * lectures et écrivent des donnees sur le compte.
+ */
+const PUBLIC_ROUTES = [
+  '/',
+  '/editor',
+  '/login',
+  '/signup',
+  '/auth/callback',
+  '/auth/auth-code-error',
+]
 
 function isPublicRoute(pathname: string): boolean {
   return PUBLIC_ROUTES.some((route) => pathname === route || pathname.startsWith(`${route}/`))

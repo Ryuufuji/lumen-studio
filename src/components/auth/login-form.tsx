@@ -9,8 +9,10 @@
  */
 
 import { useState, useTransition } from 'react'
+import Link from 'next/link'
 import { KeyRound, Loader2, Mail } from 'lucide-react'
 import { getSupabaseBrowser } from '@/lib/supabase/client'
+import { explainAuthError, isSupabaseConfigured } from '@/lib/supabase/errors'
 import { cn } from '@/lib/utils'
 
 type Mode = 'password' | 'magic'
@@ -21,12 +23,17 @@ export function LoginForm({ redirectTo = '/editor' }: { redirectTo?: string }) {
   const [password, setPassword] = useState('')
   const [status, setStatus] = useState<'idle' | 'error'>('idle')
   const [message, setMessage] = useState<string | null>(null)
+  /** Vrai quand le message provient d'un réseau injoignable, et non d'un
+   *  mot de passe refusé : dans ce cas l'éditeur reste accessible et on doit
+   *  le proposer. */
+  const [offline, setOffline] = useState(false)
   const [pending, startTransition] = useTransition()
 
   const submit = (event: React.FormEvent) => {
     event.preventDefault()
     setMessage(null)
     setStatus('idle')
+    setOffline(false)
 
     startTransition(async () => {
       const supabase = getSupabaseBrowser()
@@ -40,8 +47,13 @@ export function LoginForm({ redirectTo = '/editor' }: { redirectTo?: string }) {
             })
 
       if (error) {
+        const feedback = explainAuthError(error)
         setStatus('error')
-        setMessage(error.message)
+        setMessage(feedback.message)
+        // Le message de Supabase sur des identifiants refusés est déjà clair ;
+        // seul un échec réseau a une cause que l'utilisateur ne peut pas
+        // deviner. On ne propose l'éditeur que dans ce cas.
+        setOffline(feedback.message !== feedback.technical)
         return
       }
 
@@ -119,6 +131,17 @@ export function LoginForm({ redirectTo = '/editor' }: { redirectTo?: string }) {
           )}
         >
           {message}
+          {offline && (
+            <>
+              {' '}
+              <Link
+                href="/editor"
+                className="font-medium underline underline-offset-2 hover:no-underline"
+              >
+                Ouvrir l&apos;éditeur
+              </Link>
+            </>
+          )}
         </p>
       )}
 
@@ -134,6 +157,19 @@ export function LoginForm({ redirectTo = '/editor' }: { redirectTo?: string }) {
       <p className="text-center text-[11px] leading-relaxed text-fg-subtle">
         Pas encore de compte ? Créez-en un depuis le formulaire d’inscription,
         puis revenez ici.
+        {!isSupabaseConfigured() && (
+          <>
+            {' '}
+            <span className="text-mask-active">
+              Cette build n’est reliée à aucun projet — la connexion est
+              indisponible, mais{' '}
+              <Link href="/editor" className="underline underline-offset-2">
+                l’éditeur fonctionne
+              </Link>
+              .
+            </span>
+          </>
+        )}
       </p>
     </form>
   )

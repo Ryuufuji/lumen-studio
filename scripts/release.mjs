@@ -47,7 +47,33 @@ if (!owner || !repo) {
 process.stdout.write(`→ Publication vers ${owner}/${repo}\n`)
 
 /* -------------------------------------------------------------------------
- * 2. Construction, avec les vraies valeurs injectées
+ * 2. Reconstruction de l'application
+ * ---------------------------------------------------------------------- */
+
+/**
+ * On reconstruit TOUJOURS avant d'empaqueter.
+ *
+ * electron-builder ne sait pas construire l'application : il ne fait que
+ * ramasser ce qui se trouve déjà dans `.next/standalone`. Sans cette étape,
+ * `npm run release` publiait tel quel le bundle de la dernière fois — potentiellement
+ * des semaines plus vieux, et sans aucun lien avec les sources commitées.
+ * C'est un piège silencieux : tout paraît fonctionner, et les utilisateurs
+ * reçoivent du code que personne ne croyait envoyer.
+ */
+const prepare = spawnSync('npm', ['run', 'desktop:prepare'], {
+  cwd: ROOT,
+  stdio: 'inherit',
+  env: process.env,
+  shell: false,
+})
+
+if (prepare.status !== 0) {
+  process.stderr.write('\n✗ Reconstruction échouée : release annulée.\n')
+  process.exit(prepare.status ?? 1)
+}
+
+/* -------------------------------------------------------------------------
+ * 3. Empaquetage, avec les vraies valeurs injectées
  * ---------------------------------------------------------------------- */
 
 const build = spawnSync(
@@ -68,7 +94,7 @@ if (build.status !== 0) {
 }
 
 /* -------------------------------------------------------------------------
- * 3. Vérifications
+ * 4. Vérifications
  * ---------------------------------------------------------------------- */
 
 const problems = []
