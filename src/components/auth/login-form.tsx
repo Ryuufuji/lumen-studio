@@ -155,8 +155,14 @@ export function LoginForm({ redirectTo = '/editor' }: { redirectTo?: string }) {
       </button>
 
       <p className="text-center text-[11px] leading-relaxed text-fg-subtle">
-        Pas encore de compte ? Créez-en un depuis le formulaire d’inscription,
-        puis revenez ici.
+        Pas encore de compte ?{' '}
+        <Link
+          href={`/signup${redirectTo === '/editor' ? '' : `?next=${encodeURIComponent(redirectTo)}`}`}
+          className="underline underline-offset-2 hover:text-fg"
+        >
+          Créez-en un
+        </Link>
+        , puis revenez ici.
         {!isSupabaseConfigured() && (
           <>
             {' '}
