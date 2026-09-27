@@ -9,7 +9,7 @@
  *   node scripts/prepare-desktop.mjs
  */
 
-import { cp, access, rm } from 'node:fs/promises'
+import { cp, access, rm, readdir } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -51,3 +51,45 @@ for (const [from, to] of targets) {
 }
 
 process.stdout.write('\nBundle desktop prêt.\n')
+
+/* ==========================================================================
+ * Retire la chaîne de traitement d'images côté serveur
+ * ==========================================================================
+ *
+ * `next build` produit la chaîne native `sharp` de la machine qui compile. En
+ * cross-build, l'installeur Windows se retrouvait donc à embarquer des
+ * binaires `.node` compilés pour Linux — 18 Mo de code mort, et surtout une
+ * bombe latente : le moindre appel à l'optimiseur d'images de Next échouerait
+ * sur Windows avec une erreur illisible.
+ *
+ * L'application n'a besoin d'aucun traitement d'image côté serveur : la
+ * retouche est 100 % GPU, et `next.config.mjs` fixe `images.unoptimized`.
+ * Vérifié : le serveur démarre et répond normalement sans cette chaîne.
+ *
+ * ⚠ Ce retrait est COUPLÉ à `images.unoptimized: true`. Réactiver
+ * l'optimiseur d'images de Next obligerait à réintroduire sharp, et à
+ * reconstruire le standalone sur la plateforme cible — un `next build`
+ * Linux ne produit jamais des binaires Windows.
+ */
+
+const NATIVE_IMAGE_PACKAGES = ['sharp', '@img']
+
+async function stripNativeImageToolchain(root) {
+  for (const name of NATIVE_IMAGE_PACKAGES) {
+    const dir = join(root, 'node_modules', name)
+    if (!(await exists(dir))) continue
+    const entries = await readdir(dir)
+    await rm(dir, { recursive: true, force: true })
+    process.stdout.write(
+      `  ✓ retiré node_modules/${name} (${entries.length} entrées, chaîne image native)\n`,
+    )
+  }
+}
+
+const before = process.hrtime.bigint()
+await stripNativeImageToolchain(STANDALONE)
+const ms = Number(process.hrtime.bigint() - before) / 1e6
+
+if (ms > 0) {
+  process.stdout.write(`  (${ms.toFixed(0)} ms)\n`)
+}
